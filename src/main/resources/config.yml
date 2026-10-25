@@ -1,0 +1,78 @@
+# ============================================================
+#  VoteRewards - main configuration
+#  Messages use MiniMessage formatting:
+#  https://docs.advntr.dev/minimessage/format.html
+#  Reward commands live in rewards.yml
+#  Reload with: /voteadmin reload
+# ============================================================
+
+# Only votes whose username matches this pattern are accepted.
+# This stops junk or malicious names from reaching your console commands.
+# The optional leading "." allows Bedrock (Floodgate) players. Change it
+# if your Floodgate username prefix is different.
+username-regex: "^[.]?[A-Za-z0-9_]{1,16}$"
+
+# What to do when the voter is NOT online:
+#   queue - save the rewards and give them next time the player joins (recommended)
+#   run   - run the reward commands right away anyway
+#   skip  - give nothing
+offline-rewards: queue
+
+# ---------------- /vote command ----------------
+vote-command:
+  header:
+    - "<gold><strikethrough>                                        </strikethrough>"
+    - "<yellow><bold>Vote for our server!</bold></yellow> <gray>Click a link below:</gray>"
+  # Add as many vote sites as you like.
+  sites:
+    - name: "Vote Page"
+      url: "https://example.com/vote"
+  # How each site line looks. Use %name% and %url%.
+  site-format: "<gray>»</gray> <click:open_url:'%url%'><hover:show_text:'<gray>Click to open <white>%name%</white>'><aqua><underlined>%name%</underlined></aqua></hover></click>"
+  footer:
+    - "<gray>You get rewards every time you vote!</gray>"
+    - "<gold><strikethrough>                                        </strikethrough>"
+
+# ---------------- Chat broadcast when someone votes ----------------
+# Placeholders: <player> <service>
+broadcast:
+  enabled: true
+  messages:
+    - "<gold>★</gold> <yellow><player></yellow> <gray>voted on</gray> <aqua><service></aqua><gray>! Type</gray> <click:run_command:'/vote'><hover:show_text:'<gray>Click to vote'><green>/vote</green></hover></click> <gray>to vote too.</gray>"
+
+# ---------------- Discord webhook ----------------
+discord:
+  enabled: false
+  # Server Settings > Integrations > Webhooks > New Webhook > Copy URL
+  webhook-url: ""
+  # Optional overrides for the webhook's name and avatar (leave blank to use the webhook's own)
+  username: "Vote Tracker"
+  avatar-url: ""
+  # 0 = send every vote instantly.
+  # Above 0 = collect votes and send one "recent votes" summary every X seconds.
+  batch-interval-seconds: 0
+  timestamp: true
+  # Used when batch-interval-seconds is 0. Placeholders: %player% %service%
+  single-vote:
+    title: "New vote!"
+    description: "**%player%** just voted on **%service%**"
+    color: "#57F287"
+    thumbnail: "https://mc-heads.net/avatar/%player%/64"
+    footer: "Vote with /vote in-game"
+  # Used when batch-interval-seconds is above 0.
+  # line placeholders: %player% %service%   footer placeholder: %count%
+  batch:
+    title: "Recent votes"
+    line: "• **%player%** voted on %service%"
+    color: "#5865F2"
+    footer: "%count% new vote(s)"
+
+# ---------------- Plugin messages ----------------
+messages:
+  prefix: "<dark_gray>[<gold>Vote</gold>]</dark_gray> "
+  no-permission: "<red>You don't have permission to do that."
+  reloaded: "<green>VoteRewards reloaded."
+  admin-usage: "<yellow>/voteadmin reload</yellow> <gray>or</gray> <yellow>/voteadmin test <player> [service]</yellow>"
+  test-sent: "<green>Simulated a vote for <yellow><player></yellow> on <aqua><service></aqua>."
+  # Sent to a player when they join and receive queued rewards. Placeholder: <count>
+  offline-rewards-delivered: "<green>You received rewards for <yellow><count></yellow> vote(s) made while you were offline!"

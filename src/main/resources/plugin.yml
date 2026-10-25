@@ -1,0 +1,24 @@
+name: VoteRewards
+version: '${project.version}'
+main: com.example.voterewards.VoteRewardsPlugin
+api-version: '1.21'
+description: Rewards players for voting through VotifierPlus, with /vote links and Discord webhooks.
+author: YourName
+softdepend: [VotifierPlus, Votifier, NuVotifier]
+
+commands:
+  vote:
+    description: Shows the server's voting links.
+    usage: /vote
+  voteadmin:
+    description: VoteRewards admin commands.
+    usage: /voteadmin <reload|test <player> [service]>
+    aliases: [va]
+
+permissions:
+  voterewards.vote:
+    description: Allows using /vote
+    default: true
+  voterewards.admin:
+    description: Allows using /voteadmin
+    default: op

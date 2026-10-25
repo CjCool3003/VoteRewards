@@ -1,0 +1,25 @@
+# ============================================================
+#  VoteRewards - rewards
+#  These commands are run from the CONSOLE every time a player votes.
+#  Do NOT include a leading "/".
+#  Placeholders: %player%  %service%
+# ============================================================
+
+commands:
+  - "give %player% diamond 2"
+  # - "eco give %player% 250"
+  # - "crate key give %player% vote 1"
+
+# Extra commands for specific vote sites only.
+# "service" must match the name the vote site sends (not case-sensitive).
+# Do a real vote and check your console to see the exact name, e.g.
+# "Received vote from Steve via PlanetMinecraft.com"
+service-rewards:
+  - service: "PlanetMinecraft.com"
+    commands:
+      - "give %player% emerald 1"
+
+# Messages sent to the voter when they get their rewards.
+# MiniMessage format. Placeholders: <player> <service>
+player-messages:
+  - "<green>Thanks for voting on <aqua><service></aqua>! You received <yellow>2 diamonds</yellow>."
